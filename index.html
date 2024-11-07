@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Web App Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e2f7e2;
+            border-radius: 4px;
+            color: #2c6a2c;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Flask Web App Sederhana</h1>
+    <div class="content">
+        <label for="name">Masukkan Nama Anda:</label>
+        <input type="text" id="name" placeholder="Contoh: John">
+        <button onclick="submitName()">Kirim</button>
+        <div id="response" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        function submitName() {
+            let name = document.getElementById("name").value;
+            if (name) {
+                // Mengirim data ke server dengan AJAX
+                fetch('/greet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: name })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Menampilkan respon dari server
+                    document.getElementById("response").style.display = 'block';
+                    document.getElementById("response").innerText = data.message;
+                })
+                .catch(error => {
+                    console.error('Terjadi kesalahan:', error);
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
